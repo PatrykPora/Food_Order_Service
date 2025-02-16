@@ -3,5 +3,21 @@
 }
 
 .margharita-jumbo {
-    background: url('../img/margaritha.png') center;
+    background-size: cover;
+    background: url('../img/margaritha.png') no-repeat center;
+}
+
+.capriciosa-jumbo {
+    background-size: cover;
+    background: url('../img/capriciosa.png') center;
+}
+
+.spbolognese-jumbo {
+    background-size: cover;
+    background: url('../img/spbolognese.png') center;
+}
+
+.pannacotta-jumbo {
+    background-size: cover;
+    background: url('../img/pannacotta.png') center;
 }
