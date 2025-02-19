@@ -21,32 +21,5 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/dish/Pizza_Margherita")
-    public String pizzaMargherita(Model model) {
-    model.addAttribute("margherita", itemRepository.findByName("Pizza Margherita"));
-    return "pizzaMargherita";
-    }
-
-    @GetMapping("/dish/Pizza_Capriciosa")
-    public String pizzaCapriciosa(Model model) {
-        model.addAttribute("capriciosa", itemRepository.findByName("Pizza Capriciosa"));
-        return "pizzaCapriciosa";
-    }
-
-    @GetMapping("/dish/Spaghetti_Bolognese")
-    public String spagethiBolognese(Model model) {
-        model.addAttribute("bolognese", itemRepository.findByName("Spaghetti Bolognese"));
-        return "spaghettiBolognese";
-    }
-
-
-    @GetMapping("/dish/Panna_Cotta")
-    public String pannaCotta(Model model) {
-        model.addAttribute("panaCotta", itemRepository.findByName("Panna Cotta"));
-        return "pannaCotta";
-    }
-
-
-
 
 }
