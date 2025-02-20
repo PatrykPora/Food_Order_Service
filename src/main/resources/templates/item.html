@@ -25,7 +25,12 @@
                 W naszym wydaniu serwujemy pizzę na cienkim cieście z ręcznie przygotowanym sosem pomidorowym
                 i oryginalnym serem mozarella</p>
         </div>
+        <button class="btn btn-primary ms-auto"
+                th:attr="onclick=|addItem('${item.name}')|">
+            Add to Order
+        </button>
     </div>
 </div>
+<script th:src="@{/js/scripts.js}"></script>
 </body>
 </html>

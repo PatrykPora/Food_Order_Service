@@ -1,3 +1,8 @@
 .home-jumbo {
     background: url('../img/jumbo-back.png') center;
 }
+
+.btn-fixed {
+    min-width: 140px;
+    text-align: center;
+}

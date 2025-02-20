@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Strona główna</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"
+          integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="p-5 mb-4 bg-light rounded-3 home-jumbo">
+        <div class="container-fluid py-5 text-white text-center">
+            <h1 class="display-5 fw-bold">FoodOrder</h1>
+            <p class="fs-4">Your Order</p>
+        </div>
+    </div>
+    <div th:remove="all-but-first">
+        <div class="d-flex my-2 col-6 offset-3" th:each="item: ${order.items}">
+            <div class="ms-3">
+                <h5><a
+                        th:text="|${item.name} (${item.price}zł)|"> Pizza Margherita (25zł)
+                </a>
+                </h5>
+            </div>
+        </div>
+    </div>
+    <div class="text-center mt-4">
+        <h4 class="fw-bold text-primary">
+            <i class="fas fa-coins"></i>
+            <span th:text="|Total Price is ${#numbers.formatDecimal(totalPrice, 2, 2)}zł|">Total Price is 50.00zł</span>
+        </h4>
+    </div>
+
+
+    <div class="col-6 offset-3 mt-4">
+        <div class="card shadow-sm p-4">
+            <h4 class="text-center text-secondary"><i class="fas fa-receipt"></i> Complete Your Order</h4>
+            <form th:action="@{/submitOrder}" method="post">
+                <div class="mb-3">
+                    <label for="address" class="form-label fw-bold">Address:</label>
+                    <input type="text" class="form-control" id="address" name="address" required
+                           placeholder="Enter your delivery address">
+                </div>
+                <div class="mb-3">
+                    <label for="telephone" class="form-label fw-bold">Telephone:</label>
+                    <input type="tel" class="form-control" id="telephone" name="telephone" required
+                           pattern="^[0-9+\s-]{7,15}$"
+                           placeholder="Enter your phone number">
+                    <div class="form-text">Format: +48 123 456 789 or 123-456-789</div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success"
+                    th:disabled="${#lists.isEmpty(order.items)}">
+                        <i class="fas fa-check-circle"></i> Place Order
+                    </button>
+                </div>
+                <p class="text-danger text-center mt-2" th:if="${#lists.isEmpty(order.items)}">
+                    You cannot place an order with an empty cart.
+                </p>
+            </form>
+        </div>
+    </div>
+
+
+</div>
+
+</body>
+</html>
