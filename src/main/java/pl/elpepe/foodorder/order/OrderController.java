@@ -9,6 +9,7 @@ import pl.elpepe.foodorder.common.Message;
 import pl.elpepe.foodorder.item.Item;
 import pl.elpepe.foodorder.item.ItemRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -61,4 +62,25 @@ public class OrderController {
         model.addAttribute("message", new Message("Thank You", "your order is being processed"));
         return "message";
     }
+
+    @GetMapping("/panel/orders")
+    public String getOrders(Model model) {
+        List<Order> orders = orderRepository.findAll();
+        model.addAttribute("orders", orders);
+        return "orders-panel";
+    }
+
+    @GetMapping("/panel/orders/filter")
+    public String getOrdersFiltered(@RequestParam(value = "status", required = false) OrderStatus status, Model model) {
+        List<Order> orders;
+        if (status != null) {
+            orders = orderRepository.findByStatus(status);
+        } else {
+            orders = orderRepository.findAll();
+        }
+        model.addAttribute("orders", orders);
+        model.addAttribute("status", status);
+        return "orders-panel";
+    }
+
 }
