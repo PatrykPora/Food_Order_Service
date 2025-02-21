@@ -1,5 +1,5 @@
-function addItem(itemName) {
-    fetch('/' + 'addItem/' + encodeURIComponent(itemName), {
+function addItem(itemId) {
+    fetch('/' + 'addItem/' + encodeURIComponent(itemId), {
         method: 'GET',
     })
         .then(response => response.text())

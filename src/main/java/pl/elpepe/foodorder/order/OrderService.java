@@ -32,8 +32,8 @@ public class OrderService {
         order.addItem(item);
     }
 
-    public Optional<Item> findItemByName(String name) {
-        return itemRepository.findByNameIgnoreCase(name.replaceAll("_", " "));
+    public Optional<Item> findItemById(Long id) {
+        return itemRepository.findById(id);
     }
 
     public Double totalPriceForOrder() {

@@ -21,9 +21,9 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @GetMapping("/addItem/{itemName}")
-    public ResponseEntity<String> addItemToOrder(@PathVariable String itemName) {
-        Optional<Item> item = orderService.findItemByName(itemName);
+    @GetMapping("/addItem/{itemId}")
+    public ResponseEntity<String> addItemToOrder(@PathVariable Long itemId) {
+        Optional<Item> item = orderService.findItemById(itemId);
         if (item.isPresent()) {
             orderService.addItemToOrder(item.get());
             return ResponseEntity.ok("Item added to order");
