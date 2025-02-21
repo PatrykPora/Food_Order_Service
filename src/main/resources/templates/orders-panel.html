@@ -20,13 +20,13 @@
         </div>
     </div>
     <div class="text-center mb-3">
-        <a th:href="@{/panel/orders/filter?status=NEW}"
+        <a th:href="@{/panel/orders?status=NEW}"
            th:classappend="${status == 'NEW'}"
            class="btn btn-primary mx-2">NEW</a>
-        <a th:href="@{/panel/orders/filter?status=IN_PROGRESS}"
+        <a th:href="@{/panel/orders?status=IN_PROGRESS}"
            th:classappend="${status == 'IN_PROGRESS'}"
            class="btn btn-warning mx-2">IN PROGRESS</a>
-        <a th:href="@{/panel/orders/filter?status=COMPLETED}"
+        <a th:href="@{/panel/orders?status=COMPLETED}"
            th:classappend="${status == 'COMPLETED'}"
            class="btn btn-success mx-2">COMPLETED</a>
     </div>

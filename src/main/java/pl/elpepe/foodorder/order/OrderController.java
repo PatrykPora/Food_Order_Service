@@ -63,14 +63,8 @@ public class OrderController {
         return "message";
     }
 
-    @GetMapping("/panel/orders")
-    public String getOrders(Model model) {
-        List<Order> orders = orderRepository.findAll();
-        model.addAttribute("orders", orders);
-        return "orders-panel";
-    }
 
-    @GetMapping("/panel/orders/filter")
+    @GetMapping("/panel/orders")
     public String getOrdersFiltered(@RequestParam(value = "status", required = false) OrderStatus status, Model model) {
         List<Order> orders;
         if (status != null) {
