@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Order</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"
+          integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="p-5 mb-4 bg-light rounded-3 home-jumbo">
+        <div class="container-fluid py-5 text-white text-center">
+            <h1 class="display-3 fw-bold">Your Order</h1>
+            <a th:href="@{/}">Main page</a>
+        </div>
+    </div>
+    <div class="col-6 offset-3" th:if="${!order.items.isEmpty()}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+            </tr>
+            </thead>
+            <tbody th:remove="all-but-first">
+            <tr th:each="item, idx: ${order.items}">
+                <th scope="row" th:text="${idx.index+1}">1</th>
+                <td th:text="${item.name}">Pizza Marggherita</td>
+                <td th:text="|${item.price}zł|">25zł</td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Spaghetti Bolognese</td>
+                <td>23zł</td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>Panna Cotta</td>
+                <td>17zł</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="text-right">
+            <h5 th:text="|To Pay: ${#numbers.formatDecimal(sum,1,2,'COMMA')}zł|">Do zapłaty: 99.99zł</h5>
+        </div>
+        <form action="#" th:action="@{/order/submit}" method="post">
+            <div class="form-group">
+                <label for="addressInput">Adres</label>
+                <input type="text" class="form-control" id="addressInput" name="address" placeholder="default street">
+            </div>
+            <div class="form-group">
+                <label for="telephoneInput">Telefon</label>
+                <input type="text" class="form-control" id="telephoneInput" name="telephone" placeholder="888-999-777">
+            </div>
+            <div class="text-center mt-2">
+                <button class="btn btn-primary">Order</button>
+            </div>
+        </form>
+
+    </div>
+    <div th:if="${order.items.isEmpty()}" class="text-center">
+        <h2>Twoje zamówienie jest puste</h2>
+        <a href="#" th:href="@{/}">Add item to order</a>
+    </div>
+</div>
+</body>
+</html>

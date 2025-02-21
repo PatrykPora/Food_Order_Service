@@ -17,6 +17,7 @@
         <div class="container-fluid py-5 text-white text-center">
             <h1 class="display-5 fw-bold">FoodOrder</h1>
             <p class="fs-4">Welcome in our restaurant</p>
+            <a th:href="@{/order}">Your Order</a>
         </div>
     </div>
     <div th:remove="all-but-first">
@@ -29,7 +30,7 @@
                 </h5>
                 <p th:text="${item.shortDescription}" class="mb-0">Krótki opis pizzy margherita, pysznej klasyki na cienkim cieście i
                     rozpływającym się serem.</p>
-                <a href="#" th:href="@{/order/add(itemId=${item.id})}" class="btn btn-sm btn-primary mb-2"
+                <a href="#" th:href="@{/order/addItem(itemId=${item.id})}" class="btn btn-sm btn-primary mb-2"
                 >add to order</a>
             </div>
         </div>
