@@ -42,12 +42,13 @@
             </tr>
             </thead>
             <tbody th:remove="all-but-first">
-            <tr th:each="order, idx: ${orders}">
+            <tr th:each="order, idx: ${orders}" style="cursor: pointer;"
+                th:onclick="|window.location.href='/panel/orders/${order.id}'|">
                 <th scope="row" th:text="${idx.index+1}">1</th>
                 <td th:text="${order.address}">Plac wolnosci 112</td>
                 <td th:text="${order.phone}">888999777</td>
                 <td th:text="${order.status}">NEW</td>
-                <td>button to edit will be here</td>
+                <td><a th:href="@{'/panel/orders/' + ${order.id}}" class="btn btn-primary">Edit</a></td>
             </tr>
             </tbody>
         </table>

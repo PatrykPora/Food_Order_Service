@@ -3,6 +3,7 @@ package pl.elpepe.foodorder.order;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.elpepe.foodorder.common.Message;
@@ -75,6 +76,45 @@ public class OrderController {
         model.addAttribute("orders", orders);
         model.addAttribute("status", status);
         return "orders-panel";
+    }
+
+
+    @GetMapping("/panel/orders/{id}")
+    public String getOrderById(@PathVariable Long id, Model model) {
+        Optional<Order> order = orderRepository.findById(id);
+
+        if (order.isPresent()) {
+            model.addAttribute("order", order.get());
+            model.addAttribute("sum", order.get().getItems()
+                    .stream()
+                    .mapToDouble(Item::getPrice)
+                    .sum());
+        } else {
+            model.addAttribute("message", new Message("Not found", "could not find order with id: " + id));
+        }
+        return "order-edition";
+    }
+
+
+    @GetMapping("/order/process")
+    public String processOrder(@RequestParam Long orderId, Model model) {
+        Optional<Order> order = orderRepository.findById(orderId);
+        if (order.isPresent()) {
+            if (order.get().getStatus() == OrderStatus.NEW) {
+                order.get().setStatus(OrderStatus.IN_PROGRESS);
+                orderRepository.save(order.get());
+                model.addAttribute("message", new Message("Status changed", "You have updated order status"));
+            } else if (order.get().getStatus() == OrderStatus.IN_PROGRESS) {
+                order.get().setStatus(OrderStatus.COMPLETED);
+                orderRepository.save(order.get());
+                model.addAttribute("message", new Message("Status changed", "You have updated order status"));
+            } else {
+                model.addAttribute("message", new Message("Status unchanged", "status has not been changed"));
+            }
+        } else {
+            model.addAttribute("message", new Message("Status unchanged", "order with provided id not found or error occured"));
+        }
+        return "message";
     }
 
 }

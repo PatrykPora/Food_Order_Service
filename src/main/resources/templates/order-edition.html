@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Order</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"
+          integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="p-5 mb-4 bg-light rounded-3 home-jumbo">
+        <div class="container-fluid py-5 text-white text-center">
+            <h1 class="display-3 fw-bold" th:text="|Order Number: ${order.id}|">ORDERS number 1</h1>
+            <h2 class="display-3 fw-bold" th:text="|Status: ${order.status}|">Status: NEW</h2>
+            <a th:href="@{/panel/orders}">Orders list</a>
+        </div>
+    </div>
+
+
+    <div class="col-6 offset-3" th:if="${!order.items.isEmpty()}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+            </tr>
+            </thead>
+            <tbody th:remove="all-but-first">
+            <tr th:each="item, idx: ${order.items}">
+                <th scope="row" th:text="${idx.index+1}">1</th>
+                <td th:text="${item.name}">Pizza Marggherita</td>
+                <td th:text="|${item.price}zł|">25zł</td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Spaghetti Bolognese</td>
+                <td>23zł</td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>Panna Cotta</td>
+                <td>17zł</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="text-right">
+            <h5 th:text="|To Pay: ${#numbers.formatDecimal(sum,1,2,'COMMA')}zł|">Do zapłaty: 99.99zł</h5>
+        </div>
+        <a href="#" th:href="@{/order/process(orderId=${order.id})}" class="btn btn-primary"
+           th:classappend="${order.status.name() == 'COMPLETED' ? 'disabled' : ''}"
+           th:attr="aria-disabled=${order.status.name() == 'COMPLETED'}"
+        >
+            Process
+        </a>
+    </div>
+
+    <div th:if="${order.items.isEmpty()}" class="text-center">
+        <h2 th:text="${message.content()}"> order is empty</h2>
+        <a href="#" th:href="@{/panel/orders}">go to orders list</a>
+    </div>
+
+
+</div>
+</body>
+</html>
